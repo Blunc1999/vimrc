@@ -6,21 +6,19 @@
 ## Where to put my vimrc file?
 According to vim official recommendation, which you can check through `:help vimrc` in vim.
 
->	Places for your personal initializations:
->		Unix		$HOME/.vimrc, $HOME/.vim/vimrc
->				or $XDG_CONFIG_HOME/vim/vimrc
->		MS-Windows	$HOME/_vimrc, $HOME/vimfiles/vimrc
->				or $VIM/_vimrc
->		Amiga		s:.vimrc, home:.vimrc, home:vimfiles:vimrc
->				or $VIM/.vimrc
->		Haiku		$HOME/config/settings/vim/vimrc
->
->	The files are searched in the order specified above and only the first
->	one that is found is read.
->
->	RECOMMENDATION: Put all your Vim configuration stuff in the
->	$HOME/.vim/ directory ($HOME/vimfiles/ for MS-Windows). That makes it
->	easy to copy it to another system.
+	Places for your personal initializations:
+		Unix		$HOME/.vimrc, $HOME/.vim/vimrc
+				or $XDG_CONFIG_HOME/vim/vimrc
+		MS-Windows	$HOME/_vimrc, $HOME/vimfiles/vimrc
+				or $VIM/_vimrc
+		Amiga		s:.vimrc, home:.vimrc, home:vimfiles:vimrc
+				or $VIM/.vimrc
+		Haiku		$HOME/config/settings/vim/vimrc
+
+	The files are searched in the order specified above and only the first
+	one that is found is read.
+
+	RECOMMENDATION: Put all your Vim configuration stuff in the $HOME/.vim/ directory ($HOME/vimfiles/ for MS-Windows). That makes it easy to copy it to another system.
 
 
 ## How to install?
