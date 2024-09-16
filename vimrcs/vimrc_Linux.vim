@@ -135,6 +135,8 @@ if $COLORTERM == 'gnome-terminal'
 endif
 
 "set colorscheme
+
+let g:SnazzyTransparent = 1
 try
     colorscheme snazzy
 catch
@@ -277,7 +279,16 @@ Plug 'vim-scripts/indentpython.vim'
 
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
-Plug 'iamcco/markdown-preview'
+
+" If you don't have nodejs and yarn
+" use pre build, add 'vim-plug' to the filetype list so vim-plug can update this plugin
+" see: https://github.com/iamcco/markdown-preview.nvim/issues/50
+" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+
+" If you have nodejs
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+
 Plug 'scrooloose/nerdcommenter' " in <space>cc to comment a line
 
 " File navigation
@@ -336,9 +347,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'Vimjas/vim-python-pep8-indent'
 
 call plug#end()
-
-let g:SnazzyTransparent = 1
-
 
 
 " iamcco/markdown-preview
