@@ -1,7 +1,9 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" =============================================================
 " vimrc for Linux
 " Maintainer:
 "       Bruce Allen - @Blunc1999
+"
+" Thanks to amix/vimrc, giving me tons of ideas!
 "
 " Sections:
 "    -> General
@@ -17,10 +19,45 @@
 "    -> Spell checking
 "    -> Misc
 "    -> Helper functions
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"    -> vim-plug
 
-" 设置界面语言
+" =============================================================
+
+" =============================================================
+" => General
+" =============================================================
+
+" Sets how many lines of history VIM has to remember
+set history=500
+
+" Enable filetype plugins
+filetype on
+filetype indent on  "根据文件类型，加载缩进文件
+filetype plugin on
+filetype plugin indent on
+
+" Set to auto read when a file is changed from the outside
+set autoread
+au FocusGained,BufEnter * silent! checktime
+
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = ","
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+" :W sudo saves the file
+" (useful for handling the permission-denied error)
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+set nocompatible
+
+" =============================================================
+" => VIM user interface
+" =============================================================
+
+" set menu language as en_US
 set langmenu=en_US
 let $LANG = 'en_US'
 source $VIMRUNTIME/delmenu.vim
@@ -28,127 +65,281 @@ source $VIMRUNTIME/menu.vim
 "set langmenu=zh_
 "let $LANG = 'zh_CHS'
 
-" 设置文件编码和文件格式
+set wildmenu  "能够自动补全显示命令行语句，并可利用“tab”键进行相应的选择
+
+" Ignore compiled files
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+
+" Always show current position
+set ruler
+
+" A buffer becomes hidden when it is abandoned
+set hidden
+
+" Ignore case when searching
+set ignorecase
+
+" When searching try to be smart about cases
+set smartcase
+
+" Highlight search results
+set hlsearch
+
+" Makes search act like search in modern browsers
+set incsearch
+
+exec "nohlsearch"
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" For regular expressions turn magic on
+set magic
+
+" Show matching brackets when text indicator is over them
+set showmatch
+
+" How many tenths of a second to blink when matching brackets
+set matchtime=2
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set timeoutlen=500
+
+" Add a bit extra margin to the left
+set foldcolumn=1
+
+set number
+set relativenumber
+
+set cursorline
+
+set showcmd
+
+" =============================================================
+" => Colors and Fonts
+" =============================================================
+
+" Enable syntax highlighting
+syntax enable  "set 'syntax on' to override default color scheme using syntax
+
+" Set regular expression engine automatically
+set regexpengine=0
+
+
+" Enable 256 colors palette in Gnome Terminal
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
+
+"set colorscheme
+try
+    colorscheme snazzy
+catch
+endtry
+
+set background=dark
+
+" set encoding formats
 set fencs=utf-8,gbk,gb2312,gb18030
 set encoding=utf-8
 set fileencodings=utf-8,gbk,gb18030,gb2312,ucs-bom,cp936,latin-1
 set fileformat=unix
 set fileformats=unix,mac,dos
 
-" 自定义快捷键
+" set fonts for vim
+set guifont=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
 
-set showmatch  "开启匹配模式(左右符号匹配)
-set nocompatible  "设置和其他vim改型的不兼容性
-filetype on
-filetype indent on  "根据文件类型，加载缩进文件
-filetype plugin on
-filetype plugin indent on
+" =============================================================
+" => Files, backups and undo
+" =============================================================
+
+" Turn backup off, since most stuff is in SVN, git etc. anyway...
+set nobackup
+set nowritebackup
+set noswapfile
+
+" =============================================================
+" => Text, tab and indent related
+" =============================================================
+
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+"indent by 2 spaces when hitting tab
+set softtabstop=2  
+
+" Linebreak on 500 characters
+set linebreak
+set textwidth=500
+
+set autoindent
+set smartindent
+set wrap "Wrap lines
+
+" =============================================================
+" => Visual mode related
+" =============================================================
+
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+" =============================================================
+" => Moving around, tabs, windows and buffers
+" =============================================================
+
+" =============================================================
+" => Status line
+" =============================================================
+
+" Always show the status line
+set laststatus=2
+
+" Format the status line
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+
+" =============================================================
+" => Editing mappings
+" =============================================================
+
+" =============================================================
+" => Spell checking
+" =============================================================
+
+" =============================================================
+" => Misc
+" =============================================================
+
 set mouse=a
 set clipboard=unnamedplus
 set clipboard=unnamed
 let &t_ut=''
-set expandtab
-set tabstop=4  "以4个空格键显示Tab键Show existing tab with 4 spaces width
-set shiftwidth=4  "自动缩进时缩进4个空格； Indent by 4 spaces when auto-indenting
-set softtabstop=2  "当点击tab键时缩进2个空格；Indent by 2 spaces when hitting tab
 set list
 set listchars=tab:▸\ ,trail:▫
 set scrolloff=5
-set tw=0
 set indentexpr=
 set backspace=indent,eol,start
 set foldmethod=indent
 set foldlevel=99
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-set laststatus=2
+let &t_si = "\<esc>]50;cursorshape=1\x7"
+let &t_sr = "\<esc>]50;cursorshape=2\x7"
+let &t_ei = "\<esc>]50;cursorshape=0\x7"
 set autochdir
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+au bufreadpost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
+" =============================================================
+" => Helper functions
+" =============================================================
 
-syntax on  "语法高亮
-set number  "显示行数Enable line numbers
-set relativenumber
-set cursorline
-set wrap
-set showcmd
-set wildmenu  "能够自动补全显示命令行语句，并可利用“Tab”键进行相应的选择
-set hlsearch
-exec "nohlsearch"
-set incsearch
-set smartcase
+" Returns true if paste mode is enabled
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE  '
+    endif
+    return ''
+endfunction
 
-call plug#begin('~/.vim/plugged')
+" =============================================================
+" => vim-plug
+" =============================================================
 
-Plug 'vim-airline/vim-airline'
+call plug#begin('~/vimfiles/plugged')
+
 Plug 'connorholyday/vim-snazzy'
 
-
-
-" File navigation
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin'
-
-" Taglist
-Plug 'majutsushi/tagbar', { 'on': 'TagbarOpenAutoClose' }
+Plug 'mileszs/ack.vim'
 
 " Error checking
-Plug 'w0rp/ale'
-
-" Auto Complete
-Plug 'Valloric/YouCompleteMe'
-
-" Undo Tree
-Plug 'mbbill/undotree/'
-
-" Other visual enhancement
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'itchyny/vim-cursorword'
-
-" Git
+Plug 'dense-analysis/ale'
+Plug 'jiangmiao/auto-pairs'
+Plug 'vim-scripts/bufexplorer.zip'
 Plug 'rhysd/conflict-marker.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'mhinz/vim-signify'
-Plug 'gisphm/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
-
-" HTML, CSS, JavaScript, PHP, JSON, etc.
-Plug 'elzr/vim-json'
-Plug 'hail2u/vim-css3-syntax'
-Plug 'spf13/PIV', { 'for' :['php', 'vim-plug'] }
-Plug 'gko/vim-coloresque', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-Plug 'pangloss/vim-javascript', { 'for' :['javascript', 'vim-plug'] }
+Plug 'github/copilot.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'mattn/emmet-vim'
+Plug 'mattn/gist-vim'
+Plug 'junegunn/goyo.vim' " distraction free writing mode
 
 " Python
 Plug 'vim-scripts/indentpython.vim'
 
-" Markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
-Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
-Plug 'vimwiki/vimwiki'
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
+Plug 'iamcco/markdown-preview'
+Plug 'scrooloose/nerdcommenter' " in <space>cc to comment a line
+
+" File navigation
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+Plug 'amix/open_file_under_cursor.vim'
+Plug 'tpope/vim-pathogen'
+Plug 'spf13/PIV'
+Plug 'garbas/vim-snipmate'
+Plug 'godlygeek/tabular' " type ;Tabularize /= to align the =
+
+" Taglist
+Plug 'majutsushi/tagbar', { 'on': 'TagbarOpenAutoClose' }
+
+Plug 'mbbill/undotree/'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'vim-airline/vim-airline'
+Plug 'gko/vim-coloresque'
+Plug 'tpope/vim-commentary'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'itchyny/vim-cursorword'
+Plug 'terryma/vim-expand-region'
+Plug 'fadein/FIGlet'
+Plug 'tpope/vim-fugitive'
+Plug 'gisphm/vim-gitignore'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'elzr/vim-json'
+Plug 'mg979/vim-visual-multi'
 
 " Bookmarks
 Plug 'kshenoy/vim-signature'
 
-" Other useful utilities
-Plug 'terryma/vim-multiple-cursors'
-Plug 'junegunn/goyo.vim' " distraction free writing mode
+Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-surround' " type ysks' to wrap the word with '' or type cs'` to change 'word' to `word`
-Plug 'godlygeek/tabular' " type ;Tabularize /= to align the =
-Plug 'gcmt/wildfire.vim' " in Visual mode, type i' to select all text in '', or type i) i] i} ip
-Plug 'scrooloose/nerdcommenter' " in <space>cc to comment a line
-
-" Dependencies
-Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
+Plug 'mg979/vim-visual-multi'
 Plug 'kana/vim-textobj-user'
-Plug 'fadein/vim-FIGlet'
+Plug 'maxbrunsfeld/vim-yankstack'
+Plug 'amix/vim-zenroom2'
+Plug 'vimwiki/vimwiki'
+Plug 'gcmt/wildfire.vim' " in Visual mode, type i' to select all text in '', or type i) i] i} ip
+Plug 'Valloric/YouCompleteMe'
+
+" modes
+Plug 'kchmck/vim-coffee-script'
+Plug 'groenewege/vim-less'
+Plug 'sophacles/vim-bundle-mako'
+Plug 'preservim/vim-markdown'
+Plug 'vim-scripts/nginx.vim'
+Plug 'rust-lang/rust.vim'
+Plug 'vim-ruby/vim-ruby'
+Plug 'leafgarland/typescript-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'Vimjas/vim-python-pep8-indent'
 
 call plug#end()
 
 let g:SnazzyTransparent = 1
 
-colorscheme snazzy
+
 
 " iamcco/markdown-preview
 " set to 1, nvim will open the preview window after entering the Markdown buffer
