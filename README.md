@@ -70,6 +70,7 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 * [ale](https://github.com/dense-analysis/ale): A plugin providing linting (syntax checking and semantic errors).
 * [auto-pairs](https://github.com/jiangmiao/auto-pairs): Insert or delete brackets, parens, quotes in pair.
 * [bufexplorer.zip](https://github.com/vim-scripts/bufexplorer.zip): Quickly and easily switch between buffers. This plugin can be opened with `<leader+o>`
+* [coc.nvim](https://github.com/neoclide/coc.nvim): LSP client. 
 * [conflict-marker.vim](https://github.com/rhysd/conflict-marker.vim): Vim plugin for developers fighting against conflicts.
 * [copilot.vim](https://github.com/github/copilot.vim) Plugin for GitHub Copilot (AI autocompletion FTW 😅)
 * [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim): Fuzzy file, buffer, mru and tag finder. It's mapped to `<Ctrl+F>`
@@ -115,7 +116,7 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 * [vim-zenroom2](https://github.com/amix/vim-zenroom2) Remove all clutter and focus only on the essential. Similar to iA Writer or Write Room
 * [vimwiki](https://github.com/vimwiki/vimwiki): VimWiki is a personal wiki for Vim -- a number of linked text files that have their own syntax highlighting.
 * [wildfire.vim](https://github.com/gcmt/wildfire.vim): With Wildfire you can quickly select the closest text object among a group of candidates.
-* [YouCompleteMe](https://github.com/Valloric/YouCompleteMe): A code-completion engine for Vim.
+* ~~[youCompleteMe](https://github.com/Valloric/YouCompleteMe): A code-completion engine for Vim.~~
 
 
 ## Included color schemes
